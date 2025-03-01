@@ -31,7 +31,6 @@ A simple utility that adds a context menu option to Windows Explorer for quickly
 Alternatively, you can publish from the command line:
 
 ```
-# Run this command from the directory containing the .csproj file
 dotnet publish -c Release -r win-x64 --self-contained
 ```
 
@@ -89,7 +88,9 @@ The application will only resize images whose dimensions exceed 2048 pixels. For
 
 ## License
 
-[Include your license information here]
+This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details.
+
+Copyright (c) 2025 Dr. Nikolai Svakhin
 
 ## Acknowledgements
 
