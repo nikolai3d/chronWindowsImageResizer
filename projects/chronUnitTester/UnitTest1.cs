@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 
-namespace ImageResizer.Tests
+namespace ChronoImageResizer.Tests
 {
     public class BasicTests
     {

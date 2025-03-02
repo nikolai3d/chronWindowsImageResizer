@@ -7,20 +7,43 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chronWindowsImageResizer", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chronUnitTester", "chronUnitTester\chronUnitTester.csproj", "{320D6C61-CFAD-4A18-954E-DC4D44D62327}"
 EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "ChronoImageResizer.Setup", "ChronoImageResizer.Setup\ChronoImageResizer.Setup.wixproj", "{D5CEBE2E-5E27-4CCC-9753-E8A60E397B18}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AFCEC2CB-4DB2-4D18-8E59-6AFEB55070D7} = {AFCEC2CB-4DB2-4D18-8E59-6AFEB55070D7}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{AFCEC2CB-4DB2-4D18-8E59-6AFEB55070D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AFCEC2CB-4DB2-4D18-8E59-6AFEB55070D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFCEC2CB-4DB2-4D18-8E59-6AFEB55070D7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AFCEC2CB-4DB2-4D18-8E59-6AFEB55070D7}.Debug|x86.Build.0 = Debug|Any CPU
 		{AFCEC2CB-4DB2-4D18-8E59-6AFEB55070D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFCEC2CB-4DB2-4D18-8E59-6AFEB55070D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFCEC2CB-4DB2-4D18-8E59-6AFEB55070D7}.Release|x86.ActiveCfg = Release|Any CPU
+		{AFCEC2CB-4DB2-4D18-8E59-6AFEB55070D7}.Release|x86.Build.0 = Release|Any CPU
 		{320D6C61-CFAD-4A18-954E-DC4D44D62327}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{320D6C61-CFAD-4A18-954E-DC4D44D62327}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{320D6C61-CFAD-4A18-954E-DC4D44D62327}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{320D6C61-CFAD-4A18-954E-DC4D44D62327}.Debug|x86.Build.0 = Debug|Any CPU
 		{320D6C61-CFAD-4A18-954E-DC4D44D62327}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{320D6C61-CFAD-4A18-954E-DC4D44D62327}.Release|Any CPU.Build.0 = Release|Any CPU
+		{320D6C61-CFAD-4A18-954E-DC4D44D62327}.Release|x86.ActiveCfg = Release|Any CPU
+		{320D6C61-CFAD-4A18-954E-DC4D44D62327}.Release|x86.Build.0 = Release|Any CPU
+		{D5CEBE2E-5E27-4CCC-9753-E8A60E397B18}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{D5CEBE2E-5E27-4CCC-9753-E8A60E397B18}.Debug|Any CPU.Build.0 = Debug|x86
+		{D5CEBE2E-5E27-4CCC-9753-E8A60E397B18}.Debug|x86.ActiveCfg = Debug|x86
+		{D5CEBE2E-5E27-4CCC-9753-E8A60E397B18}.Debug|x86.Build.0 = Debug|x86
+		{D5CEBE2E-5E27-4CCC-9753-E8A60E397B18}.Release|Any CPU.ActiveCfg = Release|x86
+		{D5CEBE2E-5E27-4CCC-9753-E8A60E397B18}.Release|Any CPU.Build.0 = Release|x86
+		{D5CEBE2E-5E27-4CCC-9753-E8A60E397B18}.Release|x86.ActiveCfg = Release|x86
+		{D5CEBE2E-5E27-4CCC-9753-E8A60E397B18}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

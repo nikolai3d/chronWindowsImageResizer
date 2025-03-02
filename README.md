@@ -57,7 +57,7 @@ dotnet publish ./projects -c Release -r win-x64 --self-contained
 
 4. You will be presented with the following menu:
    ```
-   ImageResizer - Right-click tool to resize images
+   ChronoImageResizer - Right-click tool to resize images
    =============================================
 
    1. Install context menu (requires admin rights)
@@ -107,9 +107,19 @@ This will execute all tests in the projects directory and display the results in
 To run only specific tests, you can use the following command, e.g.:
 
 ```bash
-dotnet test .\projects\ --filter "FullyQualifiedName~ImageResizer.Tests.BasicTests"
+dotnet test .\projects\ --filter "FullyQualifiedName~ChronoImageResizer.Tests.BasicTests"
 ```
 
+## Making Wix Installer
+
+Install WiX Toolset from https://wixtoolset.org/releases/v3.11/stable/
+Add `C:\Program Files (x86)\WiX Toolset v3.11\bin\` to PATH
+Run in Windows Terminal:
+```powershell
+dotnet publish ./projects/chronWindowsImageResizer -c Release -r win-x64 --self-contained
+candle.exe -dSourceDir=".\projects\chronWindowsImageResizer\bin\Release\net8.0\win-x64\publish" "projects\ChronoImageResizer.Setup\Product.wxs"
+light.exe -ext WixUIExtension "Product.wixobj" -out "ChronoImageResizer.msi"
+```
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details.
