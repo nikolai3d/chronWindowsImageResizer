@@ -12,4 +12,10 @@
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\..\source\Program.cs" />
+    <Compile Include="..\..\source\ImageProcessor.cs" />
+    <Compile Include="..\..\source\ContextMenuManager.cs" />
+  </ItemGroup>
+
 </Project>
