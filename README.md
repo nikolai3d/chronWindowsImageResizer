@@ -1,5 +1,8 @@
 # Windows Image Resizer
 
+
+![CI](https://github.com/nikolai3d/chronWindowsImageResizer/workflows/CI/badge.svg)
+
 A simple utility that adds a context menu option to Windows Explorer for quickly resizing images to a maximum dimension of 2048 pixels while preserving aspect ratio.
 
 ## Features

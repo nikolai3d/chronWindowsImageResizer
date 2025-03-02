@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+    
+    - name: Restore dependencies
+      run: dotnet restore ./projects
+    
+    - name: Build
+      run: dotnet build ./projects --configuration Release --no-restore
+    
+    - name: Test
+      run: dotnet test ./projects --configuration Release --no-build --verbosity normal
+    
+    - name: Test with coverage
+      run: dotnet test ./projects --configuration Release --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+    
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3 
+    
+    - name: Publish
+      run: dotnet publish ./projects -c Release -r win-x64 --self-contained
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: windows-image-resizer
+        path: ./projects/chronWindowsImageResizer/bin/Release/net8.0/win-x64/publish/ 
