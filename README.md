@@ -13,36 +13,40 @@ A simple utility that adds a context menu option to Windows Explorer for quickly
 ## Prerequisites
 
 - Windows operating system
-- .NET 6.0 or newer
+- .NET 8.0 or newer
+- Visual Studio 2022 or newer
 - Administrative privileges (for context menu installation)
 
 ## Installation
 
-### Step 1: Build and Publish the App
+### Step 1: Clone the Repository
 
-1. Clone or download this repository
-2. Open the solution in Visual Studio
-3. Build the solution in Release mode
-4. Publish the application:
-   - Right-click on the project in Solution Explorer
-   - Select "Publish..."
-   - Follow the wizard to create a self-contained application for your platform
+Clone or download this repository
 
-Alternatively, you can publish from the command line:
+### Step 2: Build and Publish the App
 
+#### From Visual Studio 
+
+1. Open the solution in Visual Studio
+2. Build the solution in Release mode
+3. Publish the application
+
+#### From Command Line
+
+```bash
+dotnet clean ./projects
+dotnet build ./projects
+dotnet publish ./projects -c Release -r win-x64 --self-contained
 ```
-dotnet publish -c Release -r win-x64 --self-contained
-```
 
-### Step 2: Install the Context Menu Integration
+### Step 3: Install the Context Menu Integration
 
 1. Open a Command Prompt or PowerShell window in Administrator mode:
    - Press Windows key
    - Type "cmd" or "powershell"
    - Right-click on the result and select "Run as administrator"
 
-2. Navigate to the directory containing the published application
-
+2. Navigate to the directory containing the published application , e.g. `projects\chronWindowsImageResizer\bin\Release\net8.0\win-x64\publish\`
 3. Run the application without any arguments to access the installation menu:
    ```
    ChronImageResizer.exe
@@ -82,9 +86,26 @@ The application will only resize images whose dimensions exceed 2048 pixels. For
 
 ## Technical Details
 
-- Uses SixLabors.ImageSharp for cross-platform image processing
-- Registry modifications are only performed when running on Windows
+- Uses SixLabors.ImageSharp NuGet package for image processing
+- Registry modifications are only supported on Windows, for other OSs context menu would be installed differently (more research needed)
 - Maximum dimension can be customized by modifying the code
+
+## Running Tests
+
+To run the unit test suite from the terminal:
+
+```bash
+# Run the complete test suite
+dotnet test .\projects\
+```
+
+This will execute all tests in the projects directory and display the results in the terminal.
+
+To run only specific tests, you can use the following command, e.g.:
+
+```bash
+dotnet test .\projects\ --filter "FullyQualifiedName~ImageResizer.Tests.BasicTests"
+```
 
 ## License
 
@@ -95,3 +116,4 @@ Copyright (c) 2025 Dr. Nikolai Svakhin
 ## Acknowledgements
 
 - SixLabors.ImageSharp library
+- Claude AI, Sonnet 3.7, https://claude.ai/
