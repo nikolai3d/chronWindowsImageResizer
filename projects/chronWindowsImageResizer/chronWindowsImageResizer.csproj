@@ -13,7 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\source\*.cs" />
+    <Compile Include="..\..\source\Program.cs" />
+    <Compile Include="..\..\source\ImageProcessor.cs" />
+    <Compile Include="..\..\source\ContextMenuManager.cs" />
   </ItemGroup>
 
 </Project>
