@@ -96,7 +96,7 @@
     <Message Text="Directory contents:$(DirOutput)" Importance="high" />
     
     <!-- Run heat with simplified command first -->
-    <Exec Command="&quot;$(WixToolPath)heat.exe&quot; dir &quot;$(PublishDir)&quot; -cg PublishedFilesGroup -dr INSTALLFOLDER -srd -gg -out &quot;$(MSBuildThisFileDirectory)PublishedFiles.wxs&quot;"
+    <Exec Command="&quot;$(WixToolPath)heat.exe&quot; dir &quot;$(PublishDir)&quot; -cg PublishedFilesGroup -dr INSTALLFOLDER -srd -gg -var var.SourceDir -sfrag -suid -out &quot;$(MSBuildThisFileDirectory)PublishedFiles.wxs&quot;"
           WorkingDirectory="$(MSBuildThisFileDirectory)" />
     
     <!-- Include the generated file in compilation -->
