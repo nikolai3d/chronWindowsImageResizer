@@ -28,6 +28,12 @@ Write-Host "Building installer..." -ForegroundColor Green
 $repoRoot = (Get-Item -Path ".\").FullName
 $publishDir = Join-Path $repoRoot "projects\chronWindowsImageResizer\bin\Release\net8.0\win-x64\publish"
 $setupDir = Join-Path $repoRoot "projects\ChronoImageResizer.Setup"
+$setupBinDir = Join-Path $setupDir "bin\Release"
+
+# Create the output directory if it doesn't exist
+if (-not (Test-Path $setupBinDir)) {
+    New-Item -ItemType Directory -Path $setupBinDir -Force | Out-Null
+}
 
 # Clean and publish the main application
 Write-Host "Cleaning and publishing the application..." -ForegroundColor Cyan
@@ -61,7 +67,7 @@ try {
         exit 1
     }
 
-    light.exe -ext WixUIExtension Product.wixobj PublishedFiles.wixobj -out "ChronoImageResizer.msi"
+    light.exe -ext WixUIExtension Product.wixobj PublishedFiles.wixobj -out "$setupBinDir\ChronoImageResizer.msi"
     if ($LASTEXITCODE -ne 0) {
         Write-Error "Failed to link WiX objects"
         exit 1
@@ -72,4 +78,4 @@ finally {
 }
 
 Write-Host "`nBuild completed successfully!" -ForegroundColor Green
-Write-Host "Installer created at: $setupDir\ChronoImageResizer.msi" -ForegroundColor Green 
+Write-Host "Installer created at: $setupBinDir\ChronoImageResizer.msi" -ForegroundColor Green 
