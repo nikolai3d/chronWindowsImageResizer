@@ -20,6 +20,7 @@
 		<!-- Define application features -->
 		<Feature Id="ProductFeature" Title="Image Resizer" Level="1">
 			<ComponentGroupRef Id="ProductComponents" />
+			<ComponentGroupRef Id="PublishedFilesGroup" />
 			<ComponentGroupRef Id="RegistryEntries" />
 		</Feature>
 
@@ -50,54 +51,29 @@
 	<!-- Define components to install -->
 	<Fragment>
 		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-			<!-- Main executable -->
+			<!-- Main executable and shortcut -->
 			<Component Id="MainExecutable" Guid="*">
-				<File Id="ImageResizerEXE"
-					  Name="chronWindowsImageResizer.exe"
-					  Source="$(var.SourceDir)\chronWindowsImageResizer.exe"
-					  KeyPath="yes" />
-
 				<!-- Create shortcut in Start Menu -->
 				<Shortcut Id="ApplicationStartMenuShortcut"
 						  Name="Image Resizer"
 						  Description="Resize images to 2048px"
 						  Directory="ApplicationProgramsFolder"
-						  WorkingDirectory="INSTALLFOLDER"
-						  Advertise="yes" />
+						  Target="[INSTALLFOLDER]chronWindowsImageResizer.exe"
+						  WorkingDirectory="INSTALLFOLDER" />
 
 				<!-- Add uninstall capability -->
 				<RemoveFolder Id="CleanUpShortCut"
 							  Directory="ApplicationProgramsFolder"
 							  On="uninstall" />
+				
+				<!-- Registry key for shortcut -->
+				<RegistryValue Root="HKCU"
+							 Key="Software\ChronImageResizer"
+							 Name="installed"
+							 Type="integer"
+							 Value="1"
+							 KeyPath="yes" />
 			</Component>
-
-			<!-- Include dependencies - split into individual components -->
-			<!-- ImageSharp library -->
-			<Component Id="ImageSharpComponent" Guid="*">
-				<File Id="ImageSharpDLL"
-					  Name="SixLabors.ImageSharp.dll"
-					  Source="$(var.SourceDir)\SixLabors.ImageSharp.dll"
-					  KeyPath="yes" />
-			</Component>
-
-			<!-- ImageResizer library -->
-			<Component Id="ImageResizerComponent" Guid="*">
-				<File Id="ImageResizerDLL"
-					  Name="chronWindowsImageResizer.dll"
-					  Source="$(var.SourceDir)\chronWindowsImageResizer.dll"
-					  KeyPath="yes" />
-			</Component>
-                
-			<!-- Add additional components as needed, following this pattern -->
-			<!-- Example for adding a third-party library -->
-			<!-- 
-			<Component Id="ThirdPartyComponent" Guid="*">
-				<File Id="ThirdPartyDLL"
-					  Name="ThirdParty.dll"
-					  Source="$(var.SourceDir)\ThirdParty.dll"
-					  KeyPath="yes" />
-			</Component>
-			-->
 		</ComponentGroup>
 
 		<!-- Define registry entries for context menu -->

@@ -9,18 +9,20 @@
     <OutputName>ChronoImageResizer.Setup</OutputName>
     <OutputType>Package</OutputType>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
-    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND !Exists('$(WixTargetsPath)')">C:\Program Files (x86)\WiX Toolset v3.11\bin\Wix.targets</WixTargetsPath>
-    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND !Exists('$(WixTargetsPath)')">C:\Program Files\WiX Toolset v3.11\bin\Wix.targets</WixTargetsPath>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND !Exists('$(WixTargetsPath)')">C:\Program Files (x86)\WiX Toolset v3.14\bin\Wix.targets</WixTargetsPath>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND !Exists('$(WixTargetsPath)')">C:\Program Files\WiX Toolset v3.14\bin\Wix.targets</WixTargetsPath>
+    <WixToolPath Condition=" '$(WixToolPath)' == ''">C:\Program Files (x86)\WiX Toolset v3.14\bin\</WixToolPath>
+    <WixToolPath Condition="!Exists('$(WixToolPath)')">C:\Program Files\WiX Toolset v3.14\bin\</WixToolPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
-    <DefineConstants>Debug;SourceDir=..\chronWindowsImageResizer\bin\$(Configuration)\net8.0\</DefineConstants>
+    <DefineConstants>Debug;SourceDir=$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\chronWindowsImageResizer\bin\$(Configuration)\net8.0\publish'))</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
-    <DefineConstants>SourceDir=..\chronWindowsImageResizer\bin\$(Configuration)\net8.0\</DefineConstants>
+    <DefineConstants>SourceDir=$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\chronWindowsImageResizer\bin\$(Configuration)\net8.0\publish'))</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Product.wxs" />
@@ -29,6 +31,10 @@
     <WixExtension Include="WixUIExtension">
       <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
       <Name>WixUIExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixUtilExtension">
+      <HintPath>$(WixToolPath)WixUtilExtension.dll</HintPath>
+      <Name>WixUtilExtension</Name>
     </WixExtension>
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" Condition=" '$(WixTargetsPath)' != '' " />
@@ -39,7 +45,7 @@
   <Import Project="C:\Program Files\MSBuild\Microsoft\WiX\v3.x\Wix.targets"
           Condition=" '$(WixTargetsPath)' == '' AND !Exists('$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets') AND !Exists('C:\Program Files (x86)\MSBuild\Microsoft\WiX\v3.x\Wix.targets') AND Exists('C:\Program Files\MSBuild\Microsoft\WiX\v3.x\Wix.targets') " />
   <Target Name="EnsureWixToolsetInstalled" Condition=" '$(WixTargetsImported)' != 'true' ">
-    <Error Text="The WiX Toolset v3.11 build tools must be installed to build this project. Please install the WiX Toolset v3.11 and make sure it's properly registered with Visual Studio. To download the WiX Toolset, see https://wixtoolset.org/releases/v3.11/stable" />
+    <Error Text="The WiX Toolset v3.14 build tools must be installed to build this project. Please install the WiX Toolset v3.14 and make sure it's properly registered with Visual Studio. To download the WiX Toolset, see https://wixtoolset.org/releases/v3.11/stable" />
   </Target>
   <ItemGroup>
     <WixExtension Include="WixUIExtension">
@@ -65,8 +71,40 @@
   <!--
 	To modify your build process, add your task inside one of the targets below and uncomment it.
 	Other similar extension points exist, see Wix.targets.
-	<Target Name="BeforeBuild">
-	</Target>
+	-->
+  <Target Name="BeforeBuild">
+    <MSBuild Projects="..\chronWindowsImageResizer\chronWindowsImageResizer.csproj" 
+             Targets="Publish" 
+             Properties="Configuration=$(Configuration);Platform=$(Platform)" />
+    
+    <!-- Generate components for all published files -->
+    <PropertyGroup>
+      <PublishDir>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\chronWindowsImageResizer\bin\$(Configuration)\net8.0\publish'))</PublishDir>
+    </PropertyGroup>
+    
+    <Message Text="Publishing directory: $(PublishDir)" Importance="high" />
+    
+    <!-- Check if directory exists and show contents -->
+    <Error Text="Publish directory does not exist: $(PublishDir)" 
+           Condition="!Exists('$(PublishDir)')" />
+           
+    <Exec Command="dir &quot;$(PublishDir)&quot;" 
+          ContinueOnError="true" 
+          ConsoleToMSBuild="true">
+      <Output TaskParameter="ConsoleOutput" PropertyName="DirOutput" />
+    </Exec>
+    <Message Text="Directory contents:$(DirOutput)" Importance="high" />
+    
+    <!-- Run heat with simplified command first -->
+    <Exec Command="&quot;$(WixToolPath)heat.exe&quot; dir &quot;$(PublishDir)&quot; -cg PublishedFilesGroup -dr INSTALLFOLDER -srd -gg -out &quot;$(MSBuildThisFileDirectory)PublishedFiles.wxs&quot;"
+          WorkingDirectory="$(MSBuildThisFileDirectory)" />
+    
+    <!-- Include the generated file in compilation -->
+    <ItemGroup>
+      <Compile Include="PublishedFiles.wxs" />
+    </ItemGroup>
+  </Target>
+  <!--
 	<Target Name="AfterBuild">
 	</Target>
 	-->

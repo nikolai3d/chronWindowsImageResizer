@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <DirectoryRef Id="INSTALLFOLDER" />
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="PublishedFilesGroup">
+            <Component Id="cmp8BD585566782B82C057D409E88409236" Directory="INSTALLFOLDER" Guid="{F9384EC5-DAC6-42DA-A95F-2A3EC58CF7D2}">
+                <File Id="fil2618BDFABB64D3E4CC944C77B4244BAC" KeyPath="yes" Source="SourceDir\chronWindowsImageResizer.deps.json" />
+            </Component>
+            <Component Id="cmp7CE658B9E50C1B6141365F427DED90D7" Directory="INSTALLFOLDER" Guid="{47D5078D-3390-4452-A316-55C838FF8E19}">
+                <File Id="filF7F61B09569CFCB78180D407F8B0733C" KeyPath="yes" Source="SourceDir\chronWindowsImageResizer.dll" />
+            </Component>
+            <Component Id="cmp70E8CD4208D085EE5F30CB307DF169CE" Directory="INSTALLFOLDER" Guid="{5D78B0A4-82E0-4B90-8A1D-6A67192DDCCC}">
+                <File Id="fil90CDD0B6360E4E6995F0FB12CD6AD959" KeyPath="yes" Source="SourceDir\chronWindowsImageResizer.exe" />
+            </Component>
+            <Component Id="cmp1C8A10D176BE517C08BFCEFCB5B13FE6" Directory="INSTALLFOLDER" Guid="{54C03186-6B3C-46E5-86AB-0870372E99D7}">
+                <File Id="fil07157C76FF03E858AAB87AB87A49B619" KeyPath="yes" Source="SourceDir\chronWindowsImageResizer.pdb" />
+            </Component>
+            <Component Id="cmpC2C0555C20381C125D4A1E1933D140D4" Directory="INSTALLFOLDER" Guid="{95A27035-5F17-45EA-8B47-F624C4A612AF}">
+                <File Id="fil7716B622D1871AA714A57F9EE87D5130" KeyPath="yes" Source="SourceDir\chronWindowsImageResizer.runtimeconfig.json" />
+            </Component>
+            <Component Id="cmp77B03050DEACA545995DEAB9A2778968" Directory="INSTALLFOLDER" Guid="{F94903DA-B2E2-4BB6-82E2-F615EDB79A9D}">
+                <File Id="filC6DE6CAC1029F46290855002641B3AE9" KeyPath="yes" Source="SourceDir\SixLabors.ImageSharp.dll" />
+            </Component>
+        </ComponentGroup>
+    </Fragment>
+</Wix>
