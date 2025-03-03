@@ -2,22 +2,22 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Fragment>
         <DirectoryRef Id="INSTALLFOLDER">
-            <Component Id="chronWindowsImageResizer.deps.json" Guid="{EC275852-3E63-409E-90A1-C6D345C2D72A}">
+            <Component Id="chronWindowsImageResizer.deps.json" Guid="{71434B51-13E2-470B-A29D-56F28A6DB610}">
                 <File Id="chronWindowsImageResizer.deps.json" KeyPath="yes" Source="$(var.SourceDir)\chronWindowsImageResizer.deps.json" />
             </Component>
-            <Component Id="chronWindowsImageResizer.dll" Guid="{66A24C65-158B-482E-997F-32A8BB021820}">
+            <Component Id="chronWindowsImageResizer.dll" Guid="{DFD2F4B2-C8C8-4808-9D44-0016544C431E}">
                 <File Id="chronWindowsImageResizer.dll" KeyPath="yes" Source="$(var.SourceDir)\chronWindowsImageResizer.dll" />
             </Component>
-            <Component Id="chronWindowsImageResizer.exe" Guid="{1A356F2C-AD62-4506-93E6-FBAB30BBB607}">
+            <Component Id="chronWindowsImageResizer.exe" Guid="{7C7331F6-D086-42AE-B6A1-20C532A3CB20}">
                 <File Id="chronWindowsImageResizer.exe" KeyPath="yes" Source="$(var.SourceDir)\chronWindowsImageResizer.exe" />
             </Component>
-            <Component Id="chronWindowsImageResizer.pdb" Guid="{1D3CCF32-02AB-4953-A1E0-90A3CBB3EE7A}">
+            <Component Id="chronWindowsImageResizer.pdb" Guid="{9493DAE9-828C-4FAC-81BB-CF606A19C958}">
                 <File Id="chronWindowsImageResizer.pdb" KeyPath="yes" Source="$(var.SourceDir)\chronWindowsImageResizer.pdb" />
             </Component>
-            <Component Id="chronWindowsImageResizer.runtimeconfig.json" Guid="{E12BD1E0-318E-43A7-B0E5-16E2CD171491}">
+            <Component Id="chronWindowsImageResizer.runtimeconfig.json" Guid="{47A3B069-5139-4AC0-B1DA-EDDB6EE91B0C}">
                 <File Id="chronWindowsImageResizer.runtimeconfig.json" KeyPath="yes" Source="$(var.SourceDir)\chronWindowsImageResizer.runtimeconfig.json" />
             </Component>
-            <Component Id="SixLabors.ImageSharp.dll" Guid="{1589735D-FBD8-4CB9-A688-9BA7EBA44D82}">
+            <Component Id="SixLabors.ImageSharp.dll" Guid="{59CF21AB-C7E2-4F1E-B620-023B4E077746}">
                 <File Id="SixLabors.ImageSharp.dll" KeyPath="yes" Source="$(var.SourceDir)\SixLabors.ImageSharp.dll" />
             </Component>
         </DirectoryRef>
