@@ -57,7 +57,7 @@ dotnet publish ./projects -c Release -r win-x64 --self-contained
 
 4. You will be presented with the following menu:
    ```
-   ImageResizer - Right-click tool to resize images
+   ChronoImageResizer - Right-click tool to resize images
    =============================================
 
    1. Install context menu (requires admin rights)
@@ -107,8 +107,51 @@ This will execute all tests in the projects directory and display the results in
 To run only specific tests, you can use the following command, e.g.:
 
 ```bash
-dotnet test .\projects\ --filter "FullyQualifiedName~ImageResizer.Tests.BasicTests"
+dotnet test .\projects\ --filter "FullyQualifiedName~ChronoImageResizer.Tests.BasicTests"
 ```
+
+## Making Wix Installer
+
+### Prerequisites
+1. Install WiX Toolset v3.14 from https://wixtoolset.org/releases/
+2. Add WiX Toolset bin directory to PATH (typically `C:\Program Files (x86)\WiX Toolset v3.14\bin\` or `C:\Program Files\WiX Toolset v3.14\bin\`)
+
+### Building the Installer
+
+#### Option 1: Using the Build Script (Recommended)
+
+Run the PowerShell script from the repository root:
+
+```powershell
+.\build-installer.ps1
+```
+
+The script will:
+1. Check for WiX Toolset installation
+2. Clean and publish the application
+3. Generate necessary WiX components
+4. Build the MSI installer
+
+#### Option 2: Manual Build
+
+If you prefer to run the commands manually, use the following in Windows Terminal (PowerShell):
+
+```powershell
+# Clean and publish the main application
+dotnet clean ./projects/chronWindowsImageResizer -c Release
+dotnet publish ./projects/chronWindowsImageResizer -c Release -r win-x64 --self-contained
+
+# Generate components file using heat
+$publishDir = ".\projects\chronWindowsImageResizer\bin\Release\net8.0\win-x64\publish"
+heat.exe dir $publishDir -cg PublishedFilesGroup -dr INSTALLFOLDER -srd -gg -var var.SourceDir -sfrag -suid -scom -sreg -ag -out "projects\ChronoImageResizer.Setup\PublishedFiles.wxs"
+
+# Build the installer
+cd projects\ChronoImageResizer.Setup
+candle.exe -dSourceDir="$publishDir" Product.wxs PublishedFiles.wxs
+light.exe -ext WixUIExtension Product.wixobj PublishedFiles.wixobj -out "ChronoImageResizer.msi"
+```
+
+The installer will be created as `ChronoImageResizer.msi` in the `projects\ChronoImageResizer.Setup` directory.
 
 ## License
 

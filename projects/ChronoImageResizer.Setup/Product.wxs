@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<!-- Define product details -->
+	<Product Id="*"
+			 Name="Image Resizer"
+			 Language="1033"
+			 Version="1.0.0.0"
+			 Manufacturer="Dr. Nikolai Svakhin"
+			 UpgradeCode="280a3261-70c3-4cfc-ad51-58d75f831b7c">
+
+		<Package InstallerVersion="200"
+				 Compressed="yes"
+				 InstallScope="perMachine"
+				 Description="Windows Explorer context menu tool to resize images to 2048px"
+				 Comments="Resizes images to maximum dimension of 2048px" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate EmbedCab="yes" />
+
+		<!-- Define application features -->
+		<Feature Id="ProductFeature" Title="Image Resizer" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+			<ComponentGroupRef Id="PublishedFilesGroup" />
+			<ComponentGroupRef Id="RegistryEntries" />
+		</Feature>
+
+		<!-- Define UI -->
+		<UIRef Id="WixUI_Minimal" />
+		<WixVariable Id="WixUILicenseRtf" Value="License.rtf" />
+
+		<!-- Custom actions for installation -->
+		<InstallExecuteSequence>
+			<!-- We don't need this custom action since we're setting up the context menu through registry entries -->
+			<!-- <Custom Action="SetContextMenu" After="InstallFiles">NOT REMOVE</Custom> -->
+		</InstallExecuteSequence>
+	</Product>
+
+	<!-- Define directory structure -->
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="ImageResizer" />
+			</Directory>
+
+			<Directory Id="ProgramMenuFolder">
+				<Directory Id="ApplicationProgramsFolder" Name="Image Resizer"/>
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<!-- Define components to install -->
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<!-- Main executable and shortcut -->
+			<Component Id="MainExecutable" Guid="*">
+				<!-- Create shortcut in Start Menu -->
+				<Shortcut Id="ApplicationStartMenuShortcut"
+						  Name="Image Resizer"
+						  Description="Resize images to 2048px"
+						  Directory="ApplicationProgramsFolder"
+						  Target="[INSTALLFOLDER]chronWindowsImageResizer.exe"
+						  WorkingDirectory="INSTALLFOLDER" />
+
+				<!-- Add uninstall capability -->
+				<RemoveFolder Id="CleanUpShortCut"
+							  Directory="ApplicationProgramsFolder"
+							  On="uninstall" />
+				
+				<!-- Registry key for shortcut -->
+				<RegistryValue Root="HKCU"
+							 Key="Software\ChronImageResizer"
+							 Name="installed"
+							 Type="integer"
+							 Value="1"
+							 KeyPath="yes" />
+			</Component>
+		</ComponentGroup>
+
+		<!-- Define registry entries for context menu -->
+		<ComponentGroup Id="RegistryEntries" Directory="TARGETDIR">
+			<Component Id="ContextMenuRegistry" Guid="*">
+				<RegistryKey Root="HKCR"
+							Key="*\shell\ChronImageResizer">
+					<RegistryValue Type="string" Value="Resize to 2048px" />
+					<RegistryValue Name="Icon" Type="string" Value="[INSTALLFOLDER]chronWindowsImageResizer.exe" />
+				</RegistryKey>
+
+				<RegistryKey Root="HKCR"
+							Key="*\shell\ChronImageResizer\command">
+					<RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]chronWindowsImageResizer.exe&quot; &quot;%1&quot;" />
+				</RegistryKey>
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>

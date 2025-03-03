@@ -18,26 +18,43 @@ jobs:
       with:
         dotnet-version: 8.0.x
     
+    - name: Install WiX Toolset
+      run: |
+        $wixToolsetUrl = "https://github.com/wixtoolset/wix3/releases/download/wix3141rtm/wix314.exe"
+        $wixToolsetInstaller = "$env:TEMP\wix314.exe"
+        Invoke-WebRequest -Uri $wixToolsetUrl -OutFile $wixToolsetInstaller
+        Start-Process -FilePath $wixToolsetInstaller -ArgumentList "/q" -Wait
+        echo "C:\Program Files (x86)\WiX Toolset v3.14\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+    
     - name: Restore dependencies
-      run: dotnet restore ./projects
+      run: |
+        dotnet restore ./projects/chronWindowsImageResizer
+        dotnet restore ./projects/chronUnitTester
     
     - name: Build
-      run: dotnet build ./projects --configuration Release --no-restore
+      run: |
+        dotnet build ./projects/chronWindowsImageResizer --configuration Release --no-restore
+        dotnet build ./projects/chronUnitTester --configuration Release --no-restore
     
     - name: Test
-      run: dotnet test ./projects --configuration Release --no-build --verbosity normal
+      run: dotnet test ./projects/chronUnitTester --configuration Release --verbosity normal
     
     - name: Test with coverage
-      run: dotnet test ./projects --configuration Release --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+      run: dotnet test ./projects/chronUnitTester --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
     
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3 
     
     - name: Publish
-      run: dotnet publish ./projects -c Release -r win-x64 --self-contained
+      run: dotnet publish ./projects/chronWindowsImageResizer -c Release -r win-x64 --self-contained
+    
+    - name: Build Installer
+      run: .\build-installer.ps1
     
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
         name: windows-image-resizer
-        path: ./projects/chronWindowsImageResizer/bin/Release/net8.0/win-x64/publish/ 
+        path: |
+          ./projects/chronWindowsImageResizer/bin/Release/net8.0/win-x64/publish/
+          ./projects/ChronoImageResizer.Setup/bin/Release/ChronoImageResizer.msi

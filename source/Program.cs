@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Reflection;
 
-namespace ImageResizer
+namespace ChronoImageResizer
 {
     class Program
     {
@@ -56,7 +56,7 @@ namespace ImageResizer
 
         private static void HandleInstallation()
         {
-            Console.WriteLine("ImageResizer - Right-click tool to resize images");
+            Console.WriteLine("ChronoImageResizer - Right-click tool to resize images");
             Console.WriteLine("=============================================");
             Console.WriteLine();
             Console.WriteLine("1. Install context menu (requires admin rights)");
