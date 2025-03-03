@@ -26,7 +26,7 @@ Write-Host "Building installer..." -ForegroundColor Green
 
 # Get absolute paths
 $repoRoot = (Get-Item -Path ".\").FullName
-$publishDir = Join-Path $repoRoot "projects\chronWindowsImageResizer\bin\Release\net8.0\win-x64\publish"
+$publishDir = Join-Path $repoRoot "projects\chronWindowsImageResizer\bin\Release\x64\net8.0\publish"
 $setupDir = Join-Path $repoRoot "projects\ChronoImageResizer.Setup"
 $setupBinDir = Join-Path $setupDir "bin\Release"
 
