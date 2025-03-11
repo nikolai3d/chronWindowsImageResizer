@@ -27,4 +27,9 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+  <!-- Add reference to the main application project -->
+  <ItemGroup>
+    <ProjectReference Include="..\chronWindowsImageResizer\chronWindowsImageResizer.csproj" />
+  </ItemGroup>
+
 </Project>
