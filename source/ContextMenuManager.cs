@@ -35,6 +35,22 @@ namespace ChronImageResizer
                     exePath = exePath.Replace(".dll", ".exe");
                 }
                 
+                // Get the directory where the app is installed
+                string appDir = Path.GetDirectoryName(exePath) ?? "";
+                
+                // Path to the icon file
+                string iconPath = Path.Combine(appDir, "app.ico");
+                
+                // If icon doesn't exist in the output directory, use the executable itself as the icon
+                if (!File.Exists(iconPath))
+                {
+                    iconPath = exePath;
+                }
+                
+                // Format the icon path in Windows format: "path,index" where index is 0 for the first icon
+                // For .ico files, index is typically 0
+                string iconRegistryValue = $"\"{iconPath}\",0";
+                
                 // Make sure the path is quoted for command line
                 string command = $"\"{exePath}\" \"%1\"";
                 
@@ -50,8 +66,8 @@ namespace ChronImageResizer
                     // Set the display name for the context menu
                     key.SetValue(null, MenuName);
                     
-                    // Set the icon (optional) - using our own executable
-                    key.SetValue("Icon", exePath);
+                    // Set the icon to our app.ico file with proper Windows format
+                    key.SetValue("Icon", iconRegistryValue);
                     
                     // Create the command subkey
                     using (var cmdKey = key.CreateSubKey(CommandKeyName))
@@ -66,6 +82,7 @@ namespace ChronImageResizer
                     }
                 }
                 
+                Console.WriteLine($"Context menu installed with icon: {iconRegistryValue}");
                 return true;
             }
             catch (Exception ex)

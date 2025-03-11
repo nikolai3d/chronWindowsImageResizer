@@ -12,6 +12,7 @@
     <SelfContained>true</SelfContained>
     <PublishSingleFile>false</PublishSingleFile>
     <PublishReadyToRun>true</PublishReadyToRun>
+    <ApplicationIcon>..\..\resources\icons\app.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,6 +24,12 @@
     <Compile Include="..\..\source\Program.cs" />
     <Compile Include="..\..\source\ImageProcessor.cs" />
     <Compile Include="..\..\source\ContextMenuManager.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\resources\icons\app.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
